@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> {{ h1 }} </h1>
+    {% for projet in Liste %}
+        <ul>
+            <li><a href="path('')">{{ projet }}</a></li>
+        </ul>
+    {% endfor %}
+{% endblock %}
