@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %}
+    Projets
+{% endblock %}
+
+{% block main %}
     <h1> {{ h1 }} </h1>
     {% for projet in Liste %}
         <ul>
