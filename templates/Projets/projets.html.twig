@@ -1,14 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Projets
-{% endblock %}
+{% block title %}Projets{% endblock %}
+
+{% block navlink_class_projets %}active{% endblock %}
+{% block aria_current_projets %}page{% endblock %}
 
 {% block main %}
     <h1> {{ h1 }} </h1>
-    {% for projet in Liste %}
-        <ul>
-            <li><a href="path('')">{{ projet }}</a></li>
-        </ul>
-    {% endfor %}
+    <div class="list-group">
+        {% for projet in Liste %}
+            <ul>
+                <li>
+                    <a href="path('')" class="list-group-item list-group-item-action" active aria-current="true">{{ projet }}</a>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
 {% endblock %}
