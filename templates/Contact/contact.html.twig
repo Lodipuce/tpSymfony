@@ -8,5 +8,15 @@
 {% block aria_current_contact %}page{% endblock %}
 
 {% block main %}
+
     <h1> {{ h1 }} </h1>
+
+    {{ form(form) }}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
 {% endblock %}

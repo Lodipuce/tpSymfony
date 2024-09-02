@@ -2,8 +2,10 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\ContactType;
 
 class ProjetController extends AbstractController {
     #[Route('/', name: 'accueil')]
@@ -15,10 +17,21 @@ class ProjetController extends AbstractController {
     }
 
     #[Route('/contact', name: 'contact')]
-    public function contactPage(): Response
+    public function contactPage(Request $request): Response
     {
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "eamil" and "message" keys
+            $data = $form->getData();
+            dump($data);
+            return $this->redirectToRoute('accueil');
+        }
+
         return $this->render('Contact/contact.html.twig',[
             'h1' => "Contact",
+            'form' => $form,
         ]);
     }
 
@@ -31,4 +44,6 @@ class ProjetController extends AbstractController {
             'Liste' => $projets,
         ]);
     }
+
+    
 }
