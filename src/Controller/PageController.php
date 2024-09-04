@@ -6,8 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\ContactType;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
-class ProjetController extends AbstractController {
+class PageController extends AbstractController {
     #[Route('/', name: 'accueil')]
     public function homepage(): Response
     {
@@ -17,22 +19,33 @@ class ProjetController extends AbstractController {
     }
 
     #[Route('/contact', name: 'contact')]
-    public function contactPage(Request $request): Response
+    public function contactPage(Request $request, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array with "name", "eamil" and "message" keys
+            // data is an array with "name", "email" and "message" keys
             $data = $form->getData();
-            dump($data);
-            return $this->redirectToRoute('accueil');
-        }
+            $userEmail = $data['email'];
+            $userMessage = $data['message'];
 
+            $email = (new Email())
+                ->from($userEmail)
+                ->to('ange.elodie@gmail.com')
+                ->subject('Nouveau contact de "Mes Projets".')
+                ->html('<p>'. htmlspecialchars($userMessage).' </p>')
+                ->text($userMessage)    
+            ;
+            $mailer->send($email);
+
+            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+            return $this->redirectToRoute('contact');
+        } 
         return $this->render('Contact/contact.html.twig',[
             'h1' => "Contact",
             'form' => $form,
-        ]);
+        ]);   
     }
 
     #[Route('/projets', name: 'projets')]
