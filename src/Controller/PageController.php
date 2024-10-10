@@ -52,7 +52,7 @@ class PageController extends AbstractController {
     #[Route('/projets', name: 'projets')]
     public function projetPage(): Response
     {
-        $projets = ['Agence Spatiale','Avenant','Mes Oeuvres','Pretooty'];
+        $projets = ['Avenant (à venir)','JohnDoe', 'Pretooty (à venir)', 'SpaceTourism'];
         return $this->render('Projets/projets.html.twig',[
             'h1' => "Projets",
             'Liste' => $projets,
