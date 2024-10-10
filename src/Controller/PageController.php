@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\ContactType;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -58,5 +59,11 @@ class PageController extends AbstractController {
         ]);
     }
 
-    
+    #[Route('/login', name: 'login')]
+    public function loginPage(): Response
+    {       
+        return $this->render('login/login.html.twig',[
+            
+        ]);
+    }
 }
